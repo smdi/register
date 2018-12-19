@@ -26,9 +26,7 @@ def registrationview(request):
                 gender=gender
             )
             data.save()
-            # form = RegistrationForm()
             return  redirect('/')
-        # return render(request , 'registration.html',{'form': form})
     else:
 
         form = RegistrationForm()
@@ -49,17 +47,16 @@ def loginview(request):
             if un :
               if  (checker(hash,upassword) == True)  :
                   return HttpResponse('Invalid')
-            form = LoginForm()
-            return render(request , 'login.html',{'form': form})
+              else:
+                  return redirect('/home/')
+        form = LoginForm()
+        return render(request, 'login.html', {'form': form})
+
     else:
 
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
 
 
-
-
-
-
-
-
+def homeview(request):
+    return None
