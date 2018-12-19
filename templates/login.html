@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+
+    form{
+        padding: 10px;
+        margin: 10px;
+    }
+
+    h1{
+        font-family: cursive;
+        margin-top: 20px;
+        color: black;
+    }
+    .pings{
+        margin-top: 10px;
+    }
+
+</style>
+</head>
+<body>
+<center><h1> Login form  </h1></center>
+<div class="container">
+
+<div class="row">
+   <div class="col-md-offset-4 col-md-4">
+<form method="post" >
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    <center>
+    <input type="submit" value="submit"  class="btn btn-success">
+    <input type="reset" value="reset"  class="btn btn-danger">
+    </center>
+    <center>
+
+    <p class="ping" style="margin-top: 20px;"> Don't have account <a href="/reg/">signup</a></p>
+
+    </center>
+</form>
+</div>
+</div>
+</div>
+</body>
+</html>
