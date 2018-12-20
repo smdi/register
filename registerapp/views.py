@@ -3,35 +3,26 @@ from .forms import RegistrationForm ,LoginForm
 from .models import RegistrationData
 from django.http import HttpRequest , HttpResponse
 from .passwordhash import *
-
+from django.contrib.auth import get_user_model
 # Create your views here.
 
 
+User = get_user_model()
+
+
 def registrationview(request):
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
+        context  = { 'form' : form   }
         if form.is_valid():
-            username = request.POST.get('username' ,'')
-            email = request.POST.get('email', '')
-            upassword = request.POST.get('upassword', '')
-            dob = form.cleaned_data.get('dob','')
-            location = form.cleaned_data.get('location', '')
-            gender  = form.cleaned_data.get('gender','')
-            data = RegistrationData(
-                username=username ,
-                email= email,
-                upassword= hasher(upassword) ,
-                dob=dob,
-                location=location ,
-                gender=gender
-            )
-            data.save()
-            return  redirect('/')
+            form.save()
+            return redirect('/')
+        return render(request, 'registration.html', context)
     else:
-
         form = RegistrationForm()
-        return render(request, 'registration.html', {'form': form})
-
+        context = {'form': form}
+        return render(request, 'registration.html', context)
 
 
 def loginview(request):
@@ -46,12 +37,10 @@ def loginview(request):
             hash = RegistrationData.objects.values('upassword')
             if un :
               if  (checker(hash,upassword) == True)  :
-                  return HttpResponse('Invalid')
-              else:
                   return redirect('/home/')
+            return redirect('/')
         form = LoginForm()
         return render(request, 'login.html', {'form': form})
-
     else:
 
         form = LoginForm()
