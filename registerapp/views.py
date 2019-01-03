@@ -14,9 +14,23 @@ def registrationview(request):
 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        context  = { 'form' : form   }
+        context = {'form': form}
         if form.is_valid():
-            form.save()
+            username = request.POST.get('username' ,'')
+            email = request.POST.get('email', '')
+            upassword = request.POST.get('upassword', '')
+            # dob = request.POST.get('dob','')
+
+            location = request.POST.get('location', '')
+            gender  = request.POST.get('gender','')
+            data = RegistrationData(
+                username= username,
+                upassword= hasher(upassword),
+                email= email ,
+                location=location,
+                gender = gender
+            )
+            data.save()
             return redirect('/')
         return render(request, 'registration.html', context)
     else:
